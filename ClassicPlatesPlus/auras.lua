@@ -288,8 +288,8 @@ function func:Update_Auras(unit)
                                 end
 
                                 -- Option: Show Auras Only On Target
-                                if CFG.AurasOnTarget and not UnitIsTarget and not UnitIsPlayer then
-                                    return false;
+                                if CFG.AurasOnTarget and not UnitIsPlayer then
+                                    return UnitIsTarget;
                                 end
 
                                 return true;
@@ -687,7 +687,7 @@ function func:PositionAuras(unitFrame, unit)
             local isPlayer = UnitIsUnit("player", unit);
             local isTarget = UnitIsUnit(unit, "target");
             local class =
-            classFile == "PALADIN"
+               classFile == "PALADIN"
             or classFile == "ROGUE"
             or classFile == "DEATHKNIGHT"
             or classFile == "WARLOCK"

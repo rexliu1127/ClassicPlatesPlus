@@ -27,7 +27,6 @@ data.settings = {
 -- Loading Settings
 ----------------------------------------
 function func:Load_Settings()
-
     -- Creating config tables
     CFG_ClassicPlatesPlus = CFG_ClassicPlatesPlus or {};
     CFG_Account_ClassicPlatesPlus = CFG_Account_ClassicPlatesPlus or { Profiles = {} };

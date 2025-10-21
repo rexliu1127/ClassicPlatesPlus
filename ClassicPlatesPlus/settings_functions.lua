@@ -1210,7 +1210,7 @@ function func:Create_AurasList(panel, name, cfg)
         tileSize = 16,
         edgeSize = 16,
         insets = { left = 4, right = 4, top = 4, bottom = 4 },
-    }
+    };
 
     local frame_PopUp = CreateFrame("Frame", myAddon .. "PopUp", panel, "BackdropTemplate");
     frame_PopUp:SetPoint("topLeft", 60, -60);

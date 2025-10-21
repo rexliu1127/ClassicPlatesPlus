@@ -61,19 +61,7 @@ function core:init(event, ...)
 
         func:myTarget();
         func:Update_Colors();
-
-        if CFG.AurasOnTarget then
-            if UnitExists("target") then
-                if data.myTarget.previous then
-                    func:HideAllAuras(data.myTarget.previous);
-                end
-                func:Update_Auras("target");
-            elseif data.myTarget.previous then
-                func:HideAllAuras(data.myTarget.previous);
-            else
-                func:HideAllAuras();
-            end
-        end
+        func:Update_Auras("target");
     end
 
     if event == "PLAYER_FLAGS_CHANGED" then
