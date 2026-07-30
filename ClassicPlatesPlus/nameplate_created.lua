@@ -11,6 +11,7 @@ local data = core.data;
 function func:Nameplate_Created(nameplate)
     if nameplate then
         local unitFrame = CreateFrame("frame", nil, nameplate);
+        unitFrame:SetAllPoints(nameplate);
         unitFrame:SetFrameStrata("low");
         nameplate.unitFrame = unitFrame;
 
@@ -33,6 +34,7 @@ function func:Nameplate_Created(nameplate)
         -- Parent rest
         --------------------------------
         unitFrame.parent = CreateFrame("frame", nil, unitFrame);
+        unitFrame.parent:SetAllPoints(unitFrame);
 
         --------------------------------
         -- Highlights strata

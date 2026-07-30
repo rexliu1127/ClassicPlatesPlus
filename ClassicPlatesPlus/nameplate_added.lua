@@ -26,6 +26,12 @@ function func:Nameplate_Added(unit, visuals)
             else
                 local unitFrame = nameplate.unitFrame;
 
+                -- Classic Era 1.15.9 reapplies Blizzard's nameplate layout after
+                -- NAME_PLATE_CREATED, so restore our frame geometry when the unit
+                -- is actually attached to the nameplate.
+                unitFrame:SetAllPoints();
+                unitFrame.parent:SetAllPoints(unitFrame);
+
                 -- Level
                 unitFrame.level.background:SetColorTexture(
                     data.colors.border.r - 0.35,
@@ -91,7 +97,13 @@ function func:Nameplate_Added(unit, visuals)
 
                 -- Name
                 unitFrame.name:ClearAllPoints();
-                unitFrame.name:SetPoint("top", nameplate.UnitFrame.name, "top"); -- Anchor frame
+                unitFrame.name:SetPoint("center", unitFrame, "center", 0, 20);
+
+                -- Healthbar
+                -- Always provide a valid initial anchor. Dynamic guild/threat
+                -- updates may adjust it later through Update_NameAndGuildPositions.
+                unitFrame.healthbar:ClearAllPoints();
+                unitFrame.healthbar:SetPoint("top", unitFrame.name, "bottom", 0, -8);
 
                 -- Quest
                 unitFrame.quest:ClearAllPoints();

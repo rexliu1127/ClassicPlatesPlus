@@ -44,6 +44,7 @@ function core:init(event, ...)
     end
 
     if event == "PLAYER_ENTERING_WORLD" then
+        func:HookNamePlateDriver();
         func:ClassBarHeight();
         func:Update_Roster();
         func:PersonalNameplateCreate();
@@ -118,6 +119,7 @@ function core:init(event, ...)
     end
 
     if event == "NAME_PLATE_CREATED" then
+        func:HookNamePlateDriver();
         func:Nameplate_Created(arg);
     end
 

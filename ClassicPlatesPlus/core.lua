@@ -134,15 +134,19 @@ function func:ResizeNameplates()
             + ((CFG.LargeName and 14 or 10) * (CFG.NameplatesScale + inverseScale))
             + (CFG.ShowGuildName and ((CFG.LargeGuildName and 13 or 10) * (CFG.NameplatesScale + inverseScale)) or CFG.ThreatPercentage and 10 or 0);
 
-        -- Friendly Nameplates
-        if inInstance and (instanceType == "party" or instanceType == "raid") then
-            C_NamePlate.SetNamePlateFriendlySize(128, 30);
+        if type(C_NamePlate.SetNamePlateSize) == "function" then
+            C_NamePlate.SetNamePlateSize(width, height);
         else
-            C_NamePlate.SetNamePlateFriendlySize(width, height);
-        end
+            -- Friendly Nameplates
+            if inInstance and (instanceType == "party" or instanceType == "raid") then
+                C_NamePlate.SetNamePlateFriendlySize(128, 30);
+            else
+                C_NamePlate.SetNamePlateFriendlySize(width, height);
+            end
 
-        -- Enemy Nameplates
-        C_NamePlate.SetNamePlateEnemySize(width, height);
+            -- Enemy Nameplates
+            C_NamePlate.SetNamePlateEnemySize(width, height);
+        end
     end
 
     if not InCombatLockdown() then
@@ -161,9 +165,26 @@ function func:ResizeNameplates()
     end
 end
 
-hooksecurefunc(NamePlateDriverFrame,"ApplyFrameOptions", function(_, nameplateFrame)
-    func:ResizeNameplates();
-end);
+local namePlateDriverHooked = false;
+
+function func:HookNamePlateDriver()
+    if namePlateDriverHooked then
+        return;
+    end
+
+    local namePlateDriver = NamePlateDriverFrame;
+
+    if not namePlateDriver
+    or type(namePlateDriver.ApplyFrameOptions) ~= "function" then
+        return;
+    end
+
+    hooksecurefunc(namePlateDriver, "ApplyFrameOptions", function()
+        func:ResizeNameplates();
+    end);
+
+    namePlateDriverHooked = true;
+end
 
 ----------------------------------------
 -- Hiding default personal power bars
